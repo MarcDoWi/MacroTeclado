@@ -117,5 +117,9 @@ match opcion:
 
 
 #Posibles expansiones: El programa podría preguntar una cantidad de teclas a intercalar -> Posibilidad de abrir huevos pokemon para ello crearemos una estructura del tamaño que diga el usuario y con esto haremos la presion de las teclas
-#Preguntar cuanto tiempo se quiere que dure el macro
+#Preguntar cuanto tiempo se quiere que dure el macro -> Realizado el 12/02/2026
 #Subir a GitHub y llevar control de versiones -> Realizado el 11/02/2026
+
+
+# A realizar:
+#Testear método hold_key, (Sigo creyendo que tiene que haber una manera de mantener la tecla presionada aunque el programa no tenga el foco activo, pero no he encontrado nada al respecto, probablemente sea una limitación de pynput para evitar que la tecla se quede permanentemente presionada)
