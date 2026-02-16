@@ -28,13 +28,13 @@ macro_stop_listener = GlobalHotKeys({
     })
 
 
-#REVISAR
+
 def mouse_dblclick(duracion):
 
 # Temporalizador x segundos:
 
     print(f"Macro iniciada con duración {duracion} (Ctrl+Alt+Q para detener)\n") 
-    time.sleep(1)
+    time.sleep(5)
 
     # contador de tiempo que solo avanza, medido en segundos.
     tiempo_inicio = time.monotonic()
@@ -45,7 +45,11 @@ def mouse_dblclick(duracion):
         time.sleep(1)
 
 
-
+# He modificado el método, originalmente la IA me recomendó poner un sleep despues del release para que la cpu no se saturara, esto hacía que la tecla se soltase y no
+#   simulaba correctamente el sostenido de la tecla, para solucionarlo he quitado el sleep despues del release y en cambio he puesto uno despues de presionar la tecla,
+#   esto hace que la tecla se mantenga presionada durante 1 segundo, lo que simula un sostenido de la tecla, aunque no es exactamente lo mismo que mantenerla presionada sin soltarla,
+#   pero es lo más cercano que he podido conseguir con pynput, ya que parece ser que pynput suelta la tecla si el programa no esta con el foco activo, probablemente
+#   para evitar que la tecla se mantenga permanentemente apretada.
 def hold_key(key, duracion):
 
     print(f"Macro iniciada con duración {duracion} (Ctrl+Alt+Q para detener)\n") 
@@ -57,8 +61,8 @@ def hold_key(key, duracion):
 
             #Se pretendía mantener la tecla, pero parece ser que pynput suelta la tecla si el programa no esta con el foco activo, probablemente para evitar que la tecla se mantenga permanentemente apretada
             keyboard.press(key)
-            keyboard.release(key)
             time.sleep(1)
+            keyboard.release(key)
     finally:
         keyboard.release(key)
 
@@ -105,7 +109,7 @@ match opcion:
         while True:
             try:
                 tecla = input("Ingresa la tecla: ")
-                if len(tecla)   != 1:
+                if len(tecla) != 1:
                     raise ValueError("Por favor ingresa solo una tecla.")
                 else:
                     break
@@ -123,3 +127,5 @@ match opcion:
 
 # A realizar:
 #Testear método hold_key, (Sigo creyendo que tiene que haber una manera de mantener la tecla presionada aunque el programa no tenga el foco activo, pero no he encontrado nada al respecto, probablemente sea una limitación de pynput para evitar que la tecla se quede permanentemente presionada)
+# Completar el case 1 en el menú
+# mouse.click(Button.left, 1) hace un click? si es así, entonces mouse.click(Button.left, 2) haría un doble click? o hay que hacer dos llamadas a mouse.click(Button.left, 1) para hacer un doble click?
