@@ -40,8 +40,7 @@ def mouse_dblclick(duracion):
     tiempo_inicio = time.monotonic()
 
     while time.monotonic() - tiempo_inicio < duracion and running:
-        mouse.click(Button.left, 1)
-        mouse.click(Button.left, 1)
+        mouse.click(Button.left, 2)
         time.sleep(1)
 
 
@@ -103,6 +102,7 @@ while True:
 # Aqui manejamos las diferentes opciones del menú, en caso de que el usuario ingrese una opción que no sea 1 o 2, se le indicará que la opción no es válida
 match opcion:
     case 1:
+        print("Has elegido la opción click izquierdo repetido")
         mouse_dblclick(duracion)
     case 2:
         print("Has elegido la opción de mantener una tecla presionada, por favor ingresa la tecla que quieres mantener presionada (ejemplo: 'a', 'b', 'c', etc.)")
@@ -125,7 +125,7 @@ match opcion:
 #Subir a GitHub y llevar control de versiones -> Realizado el 11/02/2026
 
 
-# A realizar:
-#Testear método hold_key, (Sigo creyendo que tiene que haber una manera de mantener la tecla presionada aunque el programa no tenga el foco activo, pero no he encontrado nada al respecto, probablemente sea una limitación de pynput para evitar que la tecla se quede permanentemente presionada)
-# Completar el case 1 en el menú
-# mouse.click(Button.left, 1) hace un click? si es así, entonces mouse.click(Button.left, 2) haría un doble click? o hay que hacer dos llamadas a mouse.click(Button.left, 1) para hacer un doble click?
+# Comprobar si el programa diferencia entre por ejemplo alt izquierda y alt derecha.
+# Añadir método para hacer x cantidades de clicks de x tecla.
+# Añadir un método que permita abrir huevos pokemon.
+# En el futuro se puede añadir un método que permita ejecutar diferentes métodos, (ej: click repetido x veces, luego mantener una tecla presionada, luego volver a hacer click repetido, etc.)
