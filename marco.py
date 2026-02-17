@@ -1,17 +1,20 @@
 # Macro que hace que se haga click izquierdo repetidamente durante 30 segundos
 
 from pynput.mouse import Button, Controller as MouseController
-
-# Este sirve para poder cambiar la macro a clicks de teclado
 from pynput.keyboard import Key, GlobalHotKeys, Controller as KeyboardController, Listener
 import time
 import threading
 
 
-
+#Variables para el funcionamiento del programa
 running = True
 mouse = MouseController()
 keyboard = KeyboardController()
+
+# Configuraciones
+config_awaiting_time_before_macro_starts = 5
+options_tuple = (1, 2, 3)
+# ❓ Debería hacer un time para el sleep del final de cada vuelta del bucle de las marcos?
 
 
 # 🔴 COMBINACIÓN PARA PARAR: Ctrl + Alt + Q
@@ -34,7 +37,8 @@ def mouse_dblclick(duracion):
 # Temporalizador x segundos:
 
     print(f"Macro iniciada con duración {duracion} (Ctrl+Alt+Q para detener)\n") 
-    time.sleep(5)
+    print(f"El macro se iniciará en {config_awaiting_time_before_macro_starts} segundos...\n")
+    time.sleep(config_awaiting_time_before_macro_starts)
 
     # contador de tiempo que solo avanza, medido en segundos.
     tiempo_inicio = time.monotonic()
@@ -52,7 +56,9 @@ def mouse_dblclick(duracion):
 def hold_key(key, duracion):
 
     print(f"Macro iniciada con duración {duracion} (Ctrl+Alt+Q para detener)\n") 
-    time.sleep(5)
+    print(f"El macro se iniciará en {config_awaiting_time_before_macro_starts} segundos...\n")
+    print()
+    time.sleep(config_awaiting_time_before_macro_starts)
 
     tiempo_inicio = time.monotonic()
     try:
@@ -66,6 +72,22 @@ def hold_key(key, duracion):
         keyboard.release(key)
 
 
+# Método que permite hacer x clicks repetidos a una tecla
+# ‼️ Falta testear
+def press_key_repeatedly(key, clicks):
+    print(f"Presionando la tecla {key} {clicks} veces (Ctrl+Alt+Q para detener)\n")
+    print(f"El macro se iniciará en {config_awaiting_time_before_macro_starts} segundos...\n")
+    time.sleep(config_awaiting_time_before_macro_starts)
+
+    for i in range(clicks):
+        if not running:
+            break
+        keyboard.press(key)
+        keyboard.release(key)
+        time.sleep(1)
+    
+
+
 # Aqui creamos un hilo secundario (sabemos que es secundario por daemon=True, que indica que es secundario y hace que cuando el programa termine el hilo se muera solo, evitando un proceso "zombie")
 threading.Thread(target=macro_stop_listener.start, daemon=True).start()
 
@@ -74,21 +96,23 @@ print("El software aun esta en desarrollo, así que ten paciencia con los bugs :
 
 print("Temporalmente con finalidades de testeos se implementará un menú por consola para elegir entre diferentes macros, pero en un futuro se implementará una interfaz gráfica\n")
 print("Opcion 1 -> Doble click izquierdo repetido")
-print("Opcion 2 -> Mantener tecla presionada\n")
+print("Opcion 2 -> Mantener tecla presionada")
+print("OPcion 3 -> Realizar x clicks de una tecla\n")
 
 
 # Bloque que solicita una opción de las disponibles y maneja la excepción en caso de que el usuario ingrese algo que no sea un número entero
 while True:
     try:
         opcion = int(input("Elige una opción: "))
-        if opcion not in [1, 2]:
-            print("Opción no válida, por favor elige una opción entre 1 y 2.")
+        if opcion not in options_tuple:
+            print(f"Opción no válida, por favor elige una opción entre {options_tuple}.")
             continue
         break
     except ValueError:
         print("Opción no válida, por favor ingresa un número.")
 
-print("Has elegido la opción ", opcion)
+# ❓ Redundante? En cada case se vuelve a imprimir la opción elegida
+print(f"Has elegido la opción {opcion}\n")
 
 
 # Bloque que solicita la duración del macro y maneja la excepción en caso de que el usuario ingrese algo que no sea un número entero
@@ -105,27 +129,46 @@ match opcion:
         print("Has elegido la opción click izquierdo repetido")
         mouse_dblclick(duracion)
     case 2:
-        print("Has elegido la opción de mantener una tecla presionada, por favor ingresa la tecla que quieres mantener presionada (ejemplo: 'a', 'b', 'c', etc.)")
+        print("Has elegido la opción de mantener una tecla presionada, por favor ingresa la tecla que quieres mantener presionada (ejemplo: 'a', 'b', 'c', etc.): ")
         while True:
             try:
                 tecla = input("Ingresa la tecla: ")
                 if len(tecla) != 1:
                     raise ValueError("Por favor ingresa solo una tecla.")
-                else:
-                    break
+                break
             except ValueError as exception:
                 print(exception)
         hold_key(tecla, duracion)
+    case 3:
+        print("Has elegido la opción de realizar x clicks de una tecla, por favor ingresa la tecla que quieres presionar (ejemplo: 'a', 'b', 'c', etc.): ")
+        while True:
+            try:
+                tecla = input("Ingresa la tecla: ")
+                if len(tecla) != 1:
+                    raise ValueError("Por favor ingresa solo una tecla.")
+                break
+            except ValueError as exception:
+                print(exception)
+        while True:
+            try:
+                clicks = int(input("Introduce la cantidad de clicks a realizar: "))
+                break
+            except ValueError:
+                print("Opción no válida, por favor ingresa un número.")
+        press_key_repeatedly(tecla, clicks)
     case _:
         print("Esta opción no esta disponible, Si sale este mensaje es un error, por favor reportalo al desarrollador")
 
 
-#Posibles expansiones: El programa podría preguntar una cantidad de teclas a intercalar -> Posibilidad de abrir huevos pokemon para ello crearemos una estructura del tamaño que diga el usuario y con esto haremos la presion de las teclas
-#Preguntar cuanto tiempo se quiere que dure el macro -> Realizado el 12/02/2026
-#Subir a GitHub y llevar control de versiones -> Realizado el 11/02/2026
+#Posibles expansiones:
+    # 💡 El programa podría preguntar una cantidad de teclas a intercalar -> Posibilidad de abrir huevos pokemon para ello crearemos una estructura del tamaño que diga el usuario y con esto haremos la presion de las teclas
 
+#Implementaciones a futuro:
+    # 💡 Comprobar si el programa diferencia entre por ejemplo alt izquierda y alt derecha.
+    # 💡 Añadir método para hacer x cantidades de clicks de x tecla.
+    # 💡 Añadir un método que permita abrir huevos pokemon.
+    # 💡 En el futuro se puede añadir un método que permita ejecutar diferentes métodos, (ej: click repetido x veces, luego mantener una tecla presionada, luego volver a hacer click repetido, etc.)
+    # 💡 Hacer funciones para pedir la tecla, duración del macro y cantidad de clicks
 
-# Comprobar si el programa diferencia entre por ejemplo alt izquierda y alt derecha.
-# Añadir método para hacer x cantidades de clicks de x tecla.
-# Añadir un método que permita abrir huevos pokemon.
-# En el futuro se puede añadir un método que permita ejecutar diferentes métodos, (ej: click repetido x veces, luego mantener una tecla presionada, luego volver a hacer click repetido, etc.)
+#Próximo:
+    #1. 💡 Tengo que mover el pedir la duración del macro solo a los cases que correspondan.
