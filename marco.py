@@ -30,6 +30,45 @@ macro_stop_listener = GlobalHotKeys({
     '<ctrl>+<alt>+q': stop_macro
     })
 
+def ask_key():
+    while True:
+        try:
+            tecla = input("Ingresa la tecla (Ctrl + C para salir): ")
+            if len(tecla) != 1:
+                return tecla
+            else:
+                raise ValueError("Por favor ingresa solo una tecla.")
+        except KeyboardInterrupt:
+            print("\nSaliendo del programa...")
+            exit()
+        except ValueError as exception:
+            print(exception)
+
+def ask_duration():
+    while True:
+        try:
+            duracion = int(input("Durante cuantos segundos deseas ejecutar el macro? (Ctrl + C para salir): "))
+            if duracion <= 0:
+                raise ValueError("Por favor ingresa un número positivo.")
+            return duracion
+        except KeyboardInterrupt:
+            print("\nSaliendo del programa...")
+            exit()
+        except ValueError as exception:
+            print(exception)
+
+def ask_key_press_count():
+    while True:
+        try:
+            clicks = int(input("Introduce la cantidad de clicks a realizar: (Ctrl + C para salir): "))
+            if clicks <= 0:
+                raise ValueError("Por favor ingresa un número positivo.")
+            return clicks
+        except KeyboardInterrupt:
+            print("\nSaliendo del programa...")
+            exit()
+        except ValueError as exception:
+            print(exception)
 
 
 def mouse_dblclick(duracion):
@@ -171,4 +210,4 @@ match opcion:
     # 💡 Hacer funciones para pedir la tecla, duración del macro y cantidad de clicks
 
 #Próximo:
-    #1. 💡 Tengo que mover el pedir la duración del macro solo a los cases que correspondan.
+    #1. 💡 Tengo que mover el pedir la duración del macro solo a los cases que correspondan. -> He creado los métodos, falta implementarlos.
