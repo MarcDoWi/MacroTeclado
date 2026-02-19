@@ -26,8 +26,8 @@ STOP_COMBO = {Key.ctrl_l, Key.alt_l, 'q'}
 # Esta función carga los mensajes del archivo de idiomas correspondiente, actualmente solo hay uno (es.json) pero en el futuro se pretenden añadir mas idiomas, para ello solo
 #   habría que crear un nuevo archivo json con los mensajes traducidos y añadir el código necesario para que el programa pueda elegir entre los diferentes idiomas, probablemente
 #   añadiendo una opción en el menú principal para elegir el idioma.
-def load_messages(lang = language):
-    with open(f"locales/{lang}.json", "r", encoding="utf-8") as messages_file:
+def load_messages(language):
+    with open(f"locales/{language}.json", "r", encoding="utf-8") as messages_file:
         return json.load(messages_file)
     
 messages_file = load_messages()
@@ -55,7 +55,7 @@ def ask_key():
                 #raise ValueError("Por favor ingresa solo una tecla.")
                 raise ValueError(messages_file.value_error_press_just_one_key_message)
         except KeyboardInterrupt:
-            print(messages_file.program_exiting_message)
+            print(messages_file.program_exiting_message)    
             #print("\nSaliendo del programa...")
             exit()
         except ValueError as exception:
