@@ -47,7 +47,7 @@ def ask_key():
     global messages_file
     while True:
         try:
-            tecla = input(messages_file.key_to_press_message)
+            tecla = input(messages_file.asking_key_to_press_message)
             #tecla = input("Ingresa la tecla a presionar (Ctrl + C para salir): ")
             if len(tecla) != 1:
                 return tecla
@@ -65,7 +65,7 @@ def ask_duration():
     global messages_file
     while True:
         try:
-            duracion = int(input(messages_file.macro_duration_message))
+            duracion = int(input(messages_file.asking_macro_duration_message))
             if duracion <= 0:
                 raise ValueError(messages_file.value_error_not_positive_number_message)
             return duracion
@@ -79,7 +79,7 @@ def ask_key_press_count():
     global messages_file
     while True:
         try:
-            clicks = int(input(messages_file.number_of_clicks_message))
+            clicks = int(input(messages_file.asking_number_of_clicks_message))
             #clicks = int(input("Introduce la cantidad de clicks a realizar: (Ctrl + C para salir): "))
             if clicks <= 0:
                 raise ValueError(messages_file.value_error_not_positive_number_message)
@@ -161,7 +161,7 @@ def press_key_repeatedly(key, clicks):
     
 
 
-    
+
 # Aqui creamos un hilo secundario (sabemos que es secundario por daemon=True, que indica que es secundario y hace que cuando el programa termine el hilo se muera solo, evitando un proceso "zombie")
 threading.Thread(target=macro_stop_listener.start, daemon=True).start()
 
@@ -172,7 +172,7 @@ print(messages_file.Software_on_development_message)
 print(messages_file.Future_graphical_interface_message)
 # print("Temporalmente con finalidades de testeos se implementará un menú por consola para elegir entre diferentes macros, pero en un futuro se implementará una interfaz gráfica\n")
 
-print(messages_file.options_message)
+print(messages_file.display_options_message)
 # print("Opcion 1 -> Doble click izquierdo repetido")
 # print("Opcion 2 -> Mantener tecla presionada")
 # print("Opcion 3 -> Realizar x clicks de una tecla\n")
@@ -204,12 +204,15 @@ print(messages_file.option_chosen_message.format(opcion=opcion))
 # Aqui manejamos las diferentes opciones del menú, en caso de que el usuario ingrese una opción que no sea 1 o 2, se le indicará que la opción no es válida
 match opcion:
     case 1:
+        print(messages_file.option_selected_click_left_repeated_message)
         #print("Has elegido la opción click izquierdo repetido")
         mouse_dblclick()
     case 2:
+        print(messages_file.option_selected_hold_key_message)
         #print("Has elegido la opción de mantener una tecla presionada")
         hold_key()
     case 3:
+        print(messages_file.option_selected_press_key_repeatedly_message)
         #print("Has elegido la opción de realizar x clicks de una tecla")
         press_key_repeatedly()
     case _:
