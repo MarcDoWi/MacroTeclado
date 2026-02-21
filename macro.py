@@ -49,7 +49,7 @@ def ask_key():
         try:
             tecla = input(messages_file["asking_key_to_press_message"])
             #tecla = input("Ingresa la tecla a presionar (Ctrl + C para salir): ")
-            if len(tecla) != 1:
+            if len(tecla) == 1:
                 return tecla
             else:
                 #raise ValueError("Por favor ingresa solo una tecla.")
@@ -59,7 +59,7 @@ def ask_key():
             #print("\nSaliendo del programa...")
             exit()
         except ValueError as exception:
-            print(exception)
+            print(messages_file["value_error_press_just_one_key_message"])
 
 def ask_duration():
     global messages_file
@@ -73,7 +73,7 @@ def ask_duration():
             print(messages_file["program_exiting_message"])
             exit()
         except ValueError as exception:
-            print(exception)
+            print(messages_file["value_error_not_positive_number_message"])
 
 def ask_key_press_count():
     global messages_file
@@ -116,7 +116,7 @@ def mouse_dblclick():
 #   esto hace que la tecla se mantenga presionada durante 1 segundo, lo que simula un sostenido de la tecla, aunque no es exactamente lo mismo que mantenerla presionada sin soltarla,
 #   pero es lo más cercano que he podido conseguir con pynput, ya que parece ser que pynput suelta la tecla si el programa no esta con el foco activo, probablemente
 #   para evitar que la tecla se mantenga permanentemente apretada.
-def hold_key(key, duracion):
+def hold_key():
     global messages_file
     key = ask_key()
     duracion = ask_duration()
