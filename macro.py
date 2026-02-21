@@ -30,13 +30,13 @@ def load_messages(language):
     with open(f"locales/{language}.json", "r", encoding="utf-8") as messages_file:
         return json.load(messages_file)
     
-messages_file = load_messages()
+messages_file = load_messages(language)
 
 def stop_macro():
     global running
     global messages_file
     running = False
-    print(messages_file.macro_finishing_message)
+    print(messages_file["macro_finishing_message"])
     #print("Finalizando macro...")
 
 macro_stop_listener = GlobalHotKeys({
@@ -47,15 +47,15 @@ def ask_key():
     global messages_file
     while True:
         try:
-            tecla = input(messages_file.asking_key_to_press_message)
+            tecla = input(messages_file["asking_key_to_press_message"])
             #tecla = input("Ingresa la tecla a presionar (Ctrl + C para salir): ")
             if len(tecla) != 1:
                 return tecla
             else:
                 #raise ValueError("Por favor ingresa solo una tecla.")
-                raise ValueError(messages_file.value_error_press_just_one_key_message)
+                raise ValueError(messages_file["value_error_press_just_one_key_message"])
         except KeyboardInterrupt:
-            print(messages_file.program_exiting_message)    
+            print(messages_file["program_exiting_message"])    
             #print("\nSaliendo del programa...")
             exit()
         except ValueError as exception:
@@ -65,12 +65,12 @@ def ask_duration():
     global messages_file
     while True:
         try:
-            duracion = int(input(messages_file.asking_macro_duration_message))
+            duracion = int(input(messages_file["asking_macro_duration_message"]))
             if duracion <= 0:
-                raise ValueError(messages_file.value_error_not_positive_number_message)
+                raise ValueError(messages_file["value_error_not_positive_number_message"])
             return duracion
         except KeyboardInterrupt:
-            print(messages_file.program_exiting_message)
+            print(messages_file["program_exiting_message"])
             exit()
         except ValueError as exception:
             print(exception)
@@ -79,14 +79,14 @@ def ask_key_press_count():
     global messages_file
     while True:
         try:
-            clicks = int(input(messages_file.asking_number_of_clicks_message))
+            clicks = int(input(messages_file["asking_number_of_clicks_message"]))
             #clicks = int(input("Introduce la cantidad de clicks a realizar: (Ctrl + C para salir): "))
             if clicks <= 0:
-                raise ValueError(messages_file.value_error_not_positive_number_message)
+                raise ValueError(messages_file["value_error_not_positive_number_message"])
                 #raise ValueError("Por favor ingresa un número positivo.")
             return clicks
         except KeyboardInterrupt:
-            print(messages_file.program_exiting_message)
+            print(messages_file["program_exiting_message"])
             #print("\nSaliendo del programa...")
             exit()
         except ValueError as exception:
@@ -97,9 +97,9 @@ def mouse_dblclick():
     global messages_file
     duracion = ask_duration()
 
-    print(messages_file.macro_starting_with_duration_message.format(duracion=duracion))
+    print(messages_file["macro_starting_with_duration_message"].format(duracion=duracion))
     #print(f"Macro iniciada con duración {duracion} (Ctrl+Alt+Q para detener)\n")
-    print(messages_file.macro_starting_time_for_macro_to_start_message.format(config_awaiting_time_before_macro_starts=config_awaiting_time_before_macro_starts))
+    print(messages_file["macro_starting_time_for_macro_to_start_message"].format(config_awaiting_time_before_macro_starts=config_awaiting_time_before_macro_starts))
     #print(f"El macro se iniciará en {config_awaiting_time_before_macro_starts} segundos...\n")
     time.sleep(config_awaiting_time_before_macro_starts)
 
@@ -121,9 +121,9 @@ def hold_key(key, duracion):
     key = ask_key()
     duracion = ask_duration()
 
-    print(messages_file.macro_starting_with_duration_message.format(duracion=duracion))
+    print(messages_file["macro_starting_with_duration_message"].format(duracion=duracion))
     #print(f"Macro iniciada con duración {duracion} (Ctrl+Alt+Q para detener)\n") 
-    print(messages_file.macro_starting_time_for_macro_to_start_message.format(config_awaiting_time_before_macro_starts=config_awaiting_time_before_macro_starts))
+    print(messages_file["macro_starting_time_for_macro_to_start_message"].format(config_awaiting_time_before_macro_starts=config_awaiting_time_before_macro_starts))
     #print(f"El macro se iniciará en {config_awaiting_time_before_macro_starts} segundos...\n")
     time.sleep(config_awaiting_time_before_macro_starts)
 
@@ -146,9 +146,9 @@ def press_key_repeatedly(key, clicks):
     key = ask_key()
     clicks = ask_key_press_count()
 
-    print(messages_file.macro_starting_with_clicks_count_and_key_message.format(key=key, clicks=clicks))
+    print(messages_file["macro_starting_with_clicks_count_and_key_message"].format(key=key, clicks=clicks))
     # print(f"Presionando la tecla {key} {clicks} veces (Ctrl+Alt+Q para detener)\n")
-    print(messages_file.macro_starting_time_for_macro_to_start_message.format(config_awaiting_time_before_macro_starts=config_awaiting_time_before_macro_starts))
+    print(messages_file["macro_starting_time_for_macro_to_start_message"].format(config_awaiting_time_before_macro_starts=config_awaiting_time_before_macro_starts))
     # print(f"El macro se iniciará en {config_awaiting_time_before_macro_starts} segundos...\n")
     time.sleep(config_awaiting_time_before_macro_starts)
 
@@ -165,14 +165,14 @@ def press_key_repeatedly(key, clicks):
 # Aqui creamos un hilo secundario (sabemos que es secundario por daemon=True, que indica que es secundario y hace que cuando el programa termine el hilo se muera solo, evitando un proceso "zombie")
 threading.Thread(target=macro_stop_listener.start, daemon=True).start()
 
-print(messages_file.welcome_message)
+print(messages_file["welcome_message"])
 # print("\n\nEste es un Macro desarrollado por Marc Hernández Martínez")
-print(messages_file.Software_on_development_message)
+print(messages_file["Software_on_development_message"])
 # print("El software aun esta en desarrollo, así que ten paciencia con los bugs :)\n")
-print(messages_file.Future_graphical_interface_message)
+print(messages_file["Future_graphical_interface_message"])
 # print("Temporalmente con finalidades de testeos se implementará un menú por consola para elegir entre diferentes macros, pero en un futuro se implementará una interfaz gráfica\n")
 
-print(messages_file.display_options_message)
+print(messages_file["display_options_message"])
 # print("Opcion 1 -> Doble click izquierdo repetido")
 # print("Opcion 2 -> Mantener tecla presionada")
 # print("Opcion 3 -> Realizar x clicks de una tecla\n")
@@ -181,42 +181,42 @@ print(messages_file.display_options_message)
 # Bloque que solicita una opción de las disponibles y maneja la excepción en caso de que el usuario ingrese algo que no sea un número entero
 while True:
     try:
-        opcion = int(input(messages_file.choose_option_message))
+        opcion = int(input(messages_file["choose_option_message"]))
         # opcion = int(input("Elige una opción (Ctrl + C para salir): "))
         if opcion not in options_tuple:
             # Aunque se que el mensaje del ValueError no se mostrará al usuario, lo pongo para mantener la coherencia con el resto del código,
             #   que utiliza mensajes personalizados para cada error.
-            raise ValueError(messages_file.option_not_valid_message.format(options_tuple=options_tuple))
+            raise ValueError(messages_file["option_not_valid_message"].format(options_tuple=options_tuple))
         break
     except KeyboardInterrupt:
-        print(messages_file.program_exiting_message)
+        print(messages_file["program_exiting_message"])
         # print("\nSaliendo del programa...")
         exit()
     except ValueError:
-        print(messages_file.option_not_valid_message.format(options_tuple=options_tuple))
+        print(messages_file["option_not_valid_message"].format(options_tuple=options_tuple))
         # print("Opción no válida, por favor ingresa un número.")
 
 # ❓ Redundante? En cada case se vuelve a imprimir la opción elegida
-print(messages_file.option_chosen_message.format(opcion=opcion))
+print(messages_file["option_chosen_message"].format(opcion=opcion))
 # print(f"Has elegido la opción {opcion}\n")
 
 
 # Aqui manejamos las diferentes opciones del menú, en caso de que el usuario ingrese una opción que no sea 1 o 2, se le indicará que la opción no es válida
 match opcion:
     case 1:
-        print(messages_file.option_selected_click_left_repeated_message)
+        print(messages_file["option_selected_click_left_repeated_message"])
         #print("Has elegido la opción click izquierdo repetido")
         mouse_dblclick()
     case 2:
-        print(messages_file.option_selected_hold_key_message)
+        print(messages_file["option_selected_hold_key_message"])
         #print("Has elegido la opción de mantener una tecla presionada")
         hold_key()
     case 3:
-        print(messages_file.option_selected_press_key_repeatedly_message)
+        print(messages_file["option_selected_press_key_repeatedly_message"])
         #print("Has elegido la opción de realizar x clicks de una tecla")
         press_key_repeatedly()
     case _:
-        print(messages_file.option_not_available_message.format(option = opcion))
+        print(messages_file["option_not_available_message"].format(option = opcion))
         # print("Esta opción no esta disponible, Si sale este mensaje es un error, por favor reportalo al desarrollador")
 
 
