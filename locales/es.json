@@ -31,7 +31,6 @@
     "value_error_press_just_one_key_message": "Por favor ingresa solo una tecla.\n",
     "value_error_not_positive_number_message": "Opción no válida, por favor ingresa un número mayor que cero.\n",
     "option_not_valid_message": "Opción no válida, por favor elige una opción entre {options_tuple}.\n",
-    "option_not_valid_number_message": "Opción no válida, por favor ingresa un número.\naa",
 
     "macro_finishing_message": "Finalizando macro...",
     "macro_finished_message": "Macro finalizado.",

@@ -2,7 +2,7 @@
 
 from pynput.mouse import Button, Controller as MouseController
 from pynput.keyboard import Key, GlobalHotKeys, Controller as KeyboardController, Listener
-from errors import MoreThanOneKeyError, NumberIsNotPositiveError
+from errors import MoreThanOneKeyError, NumberIsNotPositiveError, OptionNotValidError
 import time
 import threading
 import json
@@ -56,7 +56,7 @@ def ask_key():
             print(messages_file["program_exiting_message"])
             exit()
         except MoreThanOneKeyError as exception:
-            print(messages_file["value_error_press_just_one_key_message"])
+            print(exception)
 
 def ask_duration():
     global messages_file
@@ -64,7 +64,7 @@ def ask_duration():
         try:
             duracion = int(input(messages_file["asking_macro_duration_message"]))
             if duracion <= 0:
-                raise ValueError(messages_file["value_error_not_positive_number_message"])
+                raise NumberIsNotPositiveError
             return duracion
         except KeyboardInterrupt:
             print(messages_file["program_exiting_message"])
@@ -80,12 +80,14 @@ def ask_key_press_count():
         try:
             clicks = int(input(messages_file["asking_number_of_clicks_message"]))
             if clicks <= 0:
-                raise ValueError(messages_file["value_error_not_positive_number_message"])
+                raise NumberIsNotPositiveError
             return clicks
         except KeyboardInterrupt:
             print(messages_file["program_exiting_message"])
             exit()
         except ValueError as exception:
+            print(exception)
+        except NumberIsNotPositiveError as exception:
             print(exception)
 
 
@@ -165,16 +167,15 @@ while True:
     try:
         opcion = int(input(messages_file["choose_option_message"]))
         if opcion not in options_tuple:
-            # Aunque se que el mensaje del ValueError no se mostrará al usuario, lo pongo para mantener la coherencia con el resto del código,
-            #   que utiliza mensajes personalizados para cada error.
-            raise ValueError(messages_file["option_not_valid_message"].format(options_tuple=options_tuple))
+            raise OptionNotValidError(options_tuple)
         break
     except KeyboardInterrupt:
         print(messages_file["program_exiting_message"])
         exit()
     except ValueError:
-        print(messages_file["option_not_valid_message"].format(options_tuple=options_tuple))
-
+        print(messages_file["value_error_value_is_not_a_number_message"])
+    except OptionNotValidError as exception:
+        print(exception)
 # ❓ Redundante? En cada case se vuelve a imprimir la opción elegida
 print(messages_file["option_chosen_message"].format(opcion=opcion))
 
@@ -204,5 +205,3 @@ match opcion:
     # 💡 Implementar interfaz gráfica
 
 #Próximo:
-    #1. 💡 Me gustaría que el ValueError mostrara un mensaje diferente si el error es porque el número no es positivo o si es porque se ha insertado algo que no es un número.
-    #    
