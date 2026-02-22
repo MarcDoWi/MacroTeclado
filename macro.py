@@ -176,9 +176,6 @@ while True:
         print(messages_file["value_error_value_is_not_a_number_message"])
     except OptionNotValidError as exception:
         print(exception)
-# ❓ Redundante? En cada case se vuelve a imprimir la opción elegida
-print(messages_file["option_chosen_message"].format(opcion=opcion))
-
 
 # Aqui manejamos las diferentes opciones del menú, en caso de que el usuario ingrese una opción que no sea 1 o 2, se le indicará que la opción no es válida
 match opcion:
@@ -200,8 +197,8 @@ match opcion:
 
 #Implementaciones a futuro:
     # 💡 Comprobar si el programa diferencia entre por ejemplo alt izquierda y alt derecha.
-    # 💡 Añadir un método que permita abrir huevos pokemon.
     # 💡 En el futuro se puede añadir un método que permita ejecutar diferentes métodos, (ej: click repetido x veces, luego mantener una tecla presionada, luego volver a hacer click repetido, etc.)
     # 💡 Implementar interfaz gráfica
 
 #Próximo:
+#1. 💡 Añadir un método que permita abrir huevos pokemon.
