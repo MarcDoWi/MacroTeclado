@@ -2,6 +2,7 @@
 
 from pynput.mouse import Button, Controller as MouseController
 from pynput.keyboard import Key, GlobalHotKeys, Controller as KeyboardController, Listener
+from errors import MoreThanOneKeyError, NumberIsNotPositiveError
 import time
 import threading
 import json
@@ -50,11 +51,11 @@ def ask_key():
             if len(tecla) == 1:
                 return tecla
             else:
-                raise ValueError(messages_file["value_error_press_just_one_key_message"])
+                raise MoreThanOneKeyError(messages_file["value_error_press_just_one_key_message"])
         except KeyboardInterrupt:
             print(messages_file["program_exiting_message"])
             exit()
-        except ValueError as exception:
+        except MoreThanOneKeyError as exception:
             print(messages_file["value_error_press_just_one_key_message"])
 
 def ask_duration():
@@ -69,7 +70,9 @@ def ask_duration():
             print(messages_file["program_exiting_message"])
             exit()
         except ValueError as exception:
-            print(messages_file["value_error_not_positive_number_message"])
+            print(messages_file["value_error_value_is_not_a_number_message"])
+        except NumberIsNotPositiveError as exception:
+            print(exception)
 
 def ask_key_press_count():
     global messages_file
@@ -202,3 +205,4 @@ match opcion:
 
 #Próximo:
     #1. 💡 Me gustaría que el ValueError mostrara un mensaje diferente si el error es porque el número no es positivo o si es porque se ha insertado algo que no es un número.
+    #    

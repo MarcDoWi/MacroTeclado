@@ -27,6 +27,7 @@
     "macro_executing_double_click_message": "Ejecutando el macro de doble click izquierdo repetido durante {duracion} segundos...",
     "macro_finished_double_click_message": "Macro de doble click izquierdo repetido durante {duracion} segundos finalizado.",
 
+    "value_error_value_is_not_a_number_message": "Opción no válida, por favor ingresa un número.\n",
     "value_error_press_just_one_key_message": "Por favor ingresa solo una tecla.\n",
     "value_error_not_positive_number_message": "Opción no válida, por favor ingresa un número mayor que cero.\n",
     "option_not_valid_message": "Opción no válida, por favor elige una opción entre {options_tuple}.\n",
