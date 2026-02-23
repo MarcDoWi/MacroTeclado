@@ -1,7 +1,7 @@
 # Macro que hace que se haga click izquierdo repetidamente durante 30 segundos
 
 from pynput.mouse import Button, Controller as MouseController
-from pynput.keyboard import Key, GlobalHotKeys, Controller as KeyboardController, Listener
+from pynput.keyboard import Key, GlobalHotKeys, Controller as KeyboardController
 from errors import MoreThanOneKeyError, NumberIsNotPositiveError, OptionNotValidError
 import time
 import threading
@@ -15,7 +15,7 @@ keyboard = KeyboardController()
 
 # Configuraciones
 config_awaiting_time_before_macro_starts = 5
-options_tuple = (1, 2, 3)
+options_tuple = (1, 2, 3, 4)
 language = "es"
 messages_file = None
 # ❓ Debería hacer un time para el sleep del final de cada vuelta del bucle de las marcos?
@@ -104,7 +104,7 @@ def mouse_dblclick():
 
     while time.monotonic() - tiempo_inicio < duracion and running:
         mouse.click(Button.left, 2)
-        time.sleep(1)
+        time.sleep(0.5)
 
 
 # He modificado el método, originalmente la IA me recomendó poner un sleep despues del release para que la cpu no se saturara, esto hacía que la tecla se soltase y no
@@ -149,6 +149,30 @@ def press_key_repeatedly():
         keyboard.press(key)
         keyboard.release(key)
         time.sleep(1)
+
+def macro_open_pokemon_eggs():
+    global messages_file
+    duration = ask_duration()
+
+    print(messages_file["macro_starting_with_duration_message"].format(duracion=duration))
+    print(messages_file["macro_starting_time_for_macro_to_start_message"].format(config_awaiting_time_before_macro_starts=config_awaiting_time_before_macro_starts))
+    time.sleep(config_awaiting_time_before_macro_starts)
+
+    starting_time = time.monotonic()
+    while time.monotonic() - starting_time < duration and running:
+        keyboard.press("a")
+        keyboard.press(Key.right)
+        time.sleep(0.5)
+        keyboard.release(Key.right)
+        time.sleep(1.5)
+        keyboard.release("a")
+
+        keyboard.press("d")
+        keyboard.press(Key.right)
+        time.sleep(0.5)
+        keyboard.release(Key.right)
+        time.sleep(1.5)
+        keyboard.release("d")
     
 
 
@@ -188,6 +212,9 @@ match opcion:
     case 3:
         print(messages_file["option_selected_press_key_repeatedly_message"])
         press_key_repeatedly()
+    case 4:
+        print(messages_file["option_selected_open_pokemon_eggs_message"])
+        macro_open_pokemon_eggs()
     case _:
         print(messages_file["option_not_available_message"].format(option = opcion))
 
@@ -196,9 +223,11 @@ match opcion:
     # 💡 El programa podría preguntar una cantidad de teclas a intercalar -> Posibilidad de abrir huevos pokemon para ello crearemos una estructura del tamaño que diga el usuario y con esto haremos la presion de las teclas
 
 #Implementaciones a futuro:
-    # 💡 Comprobar si el programa diferencia entre por ejemplo alt izquierda y alt derecha.
     # 💡 En el futuro se puede añadir un método que permita ejecutar diferentes métodos, (ej: click repetido x veces, luego mantener una tecla presionada, luego volver a hacer click repetido, etc.)
     # 💡 Implementar interfaz gráfica
+    # 💡 Hacer un .exe.
+    # 💡 me gustaría que el usuario no tenga que instalar Python para usar el programa
 
 #Próximo:
-#1. 💡 Añadir un método que permita abrir huevos pokemon.
+#1. 💡Implementar teclas como flechas, alt, intro, etc
+#2. 💡Comprobar si el programa diferencia entre por ejemplo alt izquierda y alt derecha.

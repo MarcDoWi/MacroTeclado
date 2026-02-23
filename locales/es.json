@@ -3,7 +3,7 @@
     "Software_on_development_message": "El software aun esta en desarrollo, así que ten paciencia con los bugs :)\n",
     "Future_graphical_interface_message": "Temporalmente con finalidades de testeos se implementará un menú por consola para elegir entre diferentes macros, pero en un futuro se implementará una interfaz gráfica\n",
 
-    "display_options_message": "Opcion 1 -> Doble click izquierdo repetido\nOpcion 2 -> Mantener tecla presionada\nOpcion 3 -> Realizar x clicks de una tecla\n",
+    "display_options_message": "Opcion 1 -> Doble click izquierdo repetido\nOpcion 2 -> Mantener tecla presionada\nOpcion 3 -> Realizar x clicks de una tecla\nOpcion 4 -> Abrir huevos pokemon generación 3\n",
     "choose_option_message": "Elige una opción (Ctrl + C para salir): ",
     "option_chosen_message": "\nHas elegido la opción {opcion}\n",
     "option_not_available_message": "La opción {option} no esta disponible, Si sale este mensaje es un error, por favor reportalo al desarrollador",
@@ -11,13 +11,14 @@
     "option_selected_click_left_repeated_message": "\n\nHas elegido la opción click izquierdo repetido\n",
     "option_selected_hold_key_message": "\n\nHas elegido la opción de mantener una tecla presionada\n",
     "option_selected_press_key_repeatedly_message": "\n\nHas elegido la opción de realizar x clicks de una tecla\n",
+    "option_selected_open_pokemon_eggs_message": "\n\nHas elegido la opción abrir huevos pokemon generación 3\n",
     
     "asking_macro_duration_message": "Durante cuantos segundos deseas ejecutar el macro? (Ctrl + C para salir): ",
     "asking_key_to_press_message": "Ingresa la tecla a presionar (Ctrl + C para salir): ",
     "asking_number_of_clicks_message": "¿Cuántas veces deseas que se presione la tecla? (Ctrl + C para salir): ",
 
-    "macro_starting_with_duration_message": "\nIniciando macro con duración de {duracion} segundos (Ctrl+Alt+Q para detener)",
-    "macro_starting_time_for_macro_to_start_message": "El macro se iniciará en {config_awaiting_time_before_macro_starts} segundos...\n",
+    "macro_starting_with_duration_message": "\nIniciando macro con duración de {duracion} segundos.",
+    "macro_starting_time_for_macro_to_start_message": "El macro se iniciará en {config_awaiting_time_before_macro_starts} segundos... (Ctrl+Alt+Q para detener)\n",
     "macro_starting_with_clicks_count_and_key_message": "Presionando la tecla {key} {clicks} veces (Ctrl+Alt+Q para detener)\n",
 
     "macro_executing_repeated_clicks_message": "Ejecutando el macro de {number_of_clicks} clicks de la tecla {key}...",
