@@ -229,5 +229,6 @@ match opcion:
     # 💡 me gustaría que el usuario no tenga que instalar Python para usar el programa
 
 #Próximo:
-#1. 💡Implementar teclas como flechas, alt, intro, etc
-#2. 💡Comprobar si el programa diferencia entre por ejemplo alt izquierda y alt derecha.
+#1. 💡Implementar interfaz gráfica.
+#2. 💡Implementar teclas como flechas, alt, intro, etc (Osea, que el usuario pueda introducir estas teclas) -> Creo que esto será mas fácil de solucionar con interfaz gráfica
+#3. 💡Comprobar si el programa diferencia entre por ejemplo alt izquierda y alt derecha.
