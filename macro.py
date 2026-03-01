@@ -164,14 +164,14 @@ def macro_open_pokemon_eggs():
         keyboard.press(Key.right)
         time.sleep(0.5)
         keyboard.release(Key.right)
-        time.sleep(1.5)
+        time.sleep(1)
         keyboard.release("a")
 
         keyboard.press("d")
         keyboard.press(Key.right)
         time.sleep(0.5)
         keyboard.release(Key.right)
-        time.sleep(1.5)
+        time.sleep(1)
         keyboard.release("d")
     
 
