@@ -232,3 +232,6 @@ match opcion:
 #1. 💡Implementar interfaz gráfica.
 #2. 💡Implementar teclas como flechas, alt, intro, etc (Osea, que el usuario pueda introducir estas teclas) -> Creo que esto será mas fácil de solucionar con interfaz gráfica
 #3. 💡Comprobar si el programa diferencia entre por ejemplo alt izquierda y alt derecha.
+
+
+# He estado estudiando PySide6 para hacer la aplicación con interfaz gráfica, pero como no tengo pensado dedicarme a aplicaciones de escritorio, sino apliaciones web, he decidido congelar este proyecto y iniciaré un servicio web.
